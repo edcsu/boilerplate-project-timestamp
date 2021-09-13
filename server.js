@@ -24,8 +24,13 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// An empty date parameter should return the current time in a JSON object with both unix key and utc key
+app.get("/api", function (req, res) {
+  const currentdate  = Date.now();
+  res.json({ unix: currentdate, utc : new Date(currentdate).toUTCString()});
+});
 
-// your first API endpoint... 
+// date API endpoint... 
 app.get("/api/:date", (req, res) => {
   const date  = req.params.date;
 
@@ -36,7 +41,7 @@ app.get("/api/:date", (req, res) => {
       const numberDate = parseInt(date);
       res.json({ unix: numberDate, utc: new Date(numberDate).toUTCString() });
   } else {
-    res.json({ error: "Invalid Date format" });
+    res.json({ error: "Invalid Date" });
   }
 });
 
